@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha256-yIDrPSXHZdOZhAqiBP7CKzIwMQmRCJ8UeB8Jo17YC4o=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/white/pace-theme-bounce.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"cpufei.github.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.19.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="OO 第一单元总结 复杂度分析各参数的意义 CogC(Cognitive Complexity):衡量一个代码单元直观理解的难易程度。 ev(G)(Essential Cyclomatic Complexity):模块包含非结构化结构的程度的度量。 iv(G)(Design Complexity):是模块决策结构的量度，因为它与对其他模块的调用相关. v(G)(Cyclomatic Complex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OO第一单元总结">
+<meta property="og:url" content="https://cpufei.github.io/2024/01/15/OO%E7%AC%AC%E4%B8%80%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="个人博客">
+<meta property="og:description" content="OO 第一单元总结 复杂度分析各参数的意义 CogC(Cognitive Complexity):衡量一个代码单元直观理解的难易程度。 ev(G)(Essential Cyclomatic Complexity):模块包含非结构化结构的程度的度量。 iv(G)(Design Complexity):是模块决策结构的量度，因为它与对其他模块的调用相关. v(G)(Cyclomatic Complex">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="g:\CS_experiment\OO\OO_code\homework_4\homework_1.png">
+<meta property="og:image" content="g:\CS_experiment\OO\OO_code\homework_4\homeword_2.png">
+<meta property="og:image" content="g:\CS_experiment\OO\OO_code\homework_4\homework_3.png">
+<meta property="article:published_time" content="2024-01-14T16:26:13.463Z">
+<meta property="article:modified_time" content="2024-01-15T15:42:37.220Z">
+<meta property="article:author" content="南风知我意">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="g:\CS_experiment\OO\OO_code\homework_4\homework_1.png">
+
+
+<link rel="canonical" href="https://cpufei.github.io/2024/01/15/OO%E7%AC%AC%E4%B8%80%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://cpufei.github.io/2024/01/15/OO%E7%AC%AC%E4%B8%80%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93/","path":"2024/01/15/OO第一单元总结/","title":"OO第一单元总结"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>OO第一单元总结 | 个人博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage"  class="use-motion" >
+  <div class="headband"></div>
+  <a target="_blank" rel="noopener" href="https://github.com/cpuFei" class="github-corner" aria-label="View source on GitHub"><svg width="80"
+      height="80" viewBox="0 0 250 250"
+      style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
+      <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+      <path
+        d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+        fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+      <path
+        d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+        fill="currentColor" class="octo-body"></path>
+    </svg></a>
+  <style>
+    .github-corner:hover .octo-arm {
+      animation: octocat-wave 560ms ease-in-out
+    }
+
+    @keyframes octocat-wave {
+
+      0%,
+      100% {
+        transform: rotate(0)
+      }
+
+      20%,
+      60% {
+        transform: rotate(-25deg)
+      }
+
+      40%,
+      80% {
+        transform: rotate(10deg)
+      }
+    }
+
+    @media (max-width:500px) {
+      .github-corner:hover .octo-arm {
+        animation: none
+      }
+
+      .github-corner .octo-arm {
+        animation: octocat-wave 560ms ease-in-out
+      }
+    }
+  </style>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">个人博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+      
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#OO-%E7%AC%AC%E4%B8%80%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">OO 第一单元总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="nav-number">1.1.</span> <span class="nav-text">第一次作业</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A%E8%A6%81%E6%B1%82%E7%AE%80%E8%BF%B0"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">作业要求简述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A%E6%80%9D%E8%B7%AF"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">作业思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UML%E5%9B%BE%EF%BC%9A"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">UML图：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="nav-number">1.1.0.4.</span> <span class="nav-text">复杂度分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E6%AC%A1%E4%BD%9C%E4%B8%9A%E7%9A%84%E4%B8%8D%E8%B6%B3"><span class="nav-number">1.1.0.5.</span> <span class="nav-text">本次作业的不足</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bug-%E5%88%86%E6%9E%90%E5%8F%8A-Hack-%E7%AD%96%E7%95%A5"><span class="nav-number">1.1.0.6.</span> <span class="nav-text">bug 分析及 Hack 策略</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="nav-number">1.2.</span> <span class="nav-text">第二次作业</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A%E8%A6%81%E6%B1%82%E7%AE%80%E8%BF%B0-1"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">作业要求简述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A%E6%80%9D%E8%B7%AF-1"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">作业思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UML%E5%9B%BE"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">UML图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90-1"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">复杂度分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E6%AC%A1%E4%BD%9C%E4%B8%9A%E7%9A%84%E4%B8%8D%E8%B6%B3-1"><span class="nav-number">1.2.0.5.</span> <span class="nav-text">本次作业的不足</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bug-%E5%88%86%E6%9E%90%E5%8F%8A-Hack-%E7%AD%96%E7%95%A5-1"><span class="nav-number">1.2.0.6.</span> <span class="nav-text">bug 分析及 Hack 策略</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AC%A1%E4%BD%9C%E4%B8%9A"><span class="nav-number">1.3.</span> <span class="nav-text">第三次作业</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A%E8%A6%81%E6%B1%82%E7%AE%80%E8%BF%B0-2"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">作业要求简述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%9C%E4%B8%9A%E6%80%9D%E8%B7%AF-2"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">作业思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UML%E5%9B%BE-1"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">UML图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90-2"><span class="nav-number">1.3.0.4.</span> <span class="nav-text">复杂度分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%AC%E6%AC%A1%E4%BD%9C%E4%B8%9A%E7%9A%84%E4%B8%8D%E8%B6%B3-2"><span class="nav-number">1.3.0.5.</span> <span class="nav-text">本次作业的不足</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bug-%E5%88%86%E6%9E%90%E5%8F%8A-Hack-%E7%AD%96%E7%95%A5-2"><span class="nav-number">1.3.0.6.</span> <span class="nav-text">bug 分析及 Hack 策略</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.4.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="南风知我意"
+      src="/images/preview.jpg">
+  <p class="site-author-name" itemprop="name">南风知我意</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/cpuFei" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cpuFei" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:lemon56077@gmail.com" title="E-Mail → mailto:lemon56077@gmail.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://cpufei.github.io/2024/01/15/OO%E7%AC%AC%E4%B8%80%E5%8D%95%E5%85%83%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/preview.jpg">
+      <meta itemprop="name" content="南风知我意">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="个人博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="OO第一单元总结 | 个人博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OO第一单元总结
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-01-15 00:26:13 / 修改时间：23:42:37" itemprop="dateCreated datePublished" datetime="2024-01-15T00:26:13+08:00">2024-01-15</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="OO-第一单元总结"><a href="#OO-第一单元总结" class="headerlink" title="OO 第一单元总结"></a>OO 第一单元总结</h1><ul>
+<li>复杂度分析各参数的意义<ul>
+<li>CogC(Cognitive Complexity):衡量一个代码单元直观理解的难易程度。</li>
+<li>ev(G)(Essential Cyclomatic Complexity):模块包含非结构化结构的程度的度量。</li>
+<li>iv(G)(Design Complexity):是模块决策结构的量度，因为它与对其他模块的调用相关.</li>
+<li>v(G)(Cyclomatic Complexity):是通过源代码的线性独立路径的计数。</li>
+<li>OCavg(Average operation Complexity):平均方法复杂度</li>
+<li>OCmax(maximun operation Complexity):方法复杂度的最大值</li>
+<li>WMC(weighted method Complexity):加权方法复杂度，衡量一个类的复杂性<span id="more"></span></li>
+</ul>
+</li>
+</ul>
+<h2 id="第一次作业"><a href="#第一次作业" class="headerlink" title="第一次作业"></a>第一次作业</h2><h4 id="作业要求简述"><a href="#作业要求简述" class="headerlink" title="作业要求简述"></a>作业要求简述</h4><ul>
+<li>本次作业要求支持含有至多一层括号、加减乘、乘方的表达式的计算的化简。</li>
+</ul>
+<h4 id="作业思路"><a href="#作业思路" class="headerlink" title="作业思路"></a>作业思路</h4><ul>
+<li>本次作业其实在一开始写的时候本意是想使用正则表达式建立一个表达式树，然后通过遍历方式去计算，并且忘记了看第一次训练。。。。。当时越往下做越感觉会出错，于是便在思考重构。。后来在做第一次实验的时候，那个递归下降的框架给了我一个好思路，于是我便是采用与第一次实验时差不多的架构。</li>
+<li>对表达式进行解析，先去遍历一些运算级较低的符号<code>+/-</code>，之后去遍历<code>*</code>等符号，进行层次解析，最终解析到<code>x</code>、常数、或者空串。这些<code>+,-,*</code>等都有一个自己的<code>class</code>，并且有<code>left,right</code>等属性，之后通过逐层调用<code>getResults</code>函数，每次调用都得到一个运算后的<code>Hashmap</code>，最终得到一个表达式的<code>Hashmap</code>，然后输出。</li>
+<li>本次作业采用了<code>递归下降</code>的做法，有利于之后的迭代开发</li>
+</ul>
+<h4 id="UML图："><a href="#UML图：" class="headerlink" title="UML图："></a><code>UML</code>图：</h4><p><img src="G:\CS_experiment\OO\OO_code\homework_4\homework_1.png" alt="homework_1"></p>
+<h4 id="复杂度分析"><a href="#复杂度分析" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><ul>
+<li>本次作业还不算特别复杂</li>
+<li>方法复杂度：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>CogC</th>
+<th>ev(G)</th>
+<th>iv(G)</th>
+<th>v(G)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Add.Add(Operate, Operate)</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Add.getResults()</td>
+<td>4</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Exp.Exp(Operate, Operate)</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Exp.getResults()</td>
+<td>4</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Exp.mul(HashMap&lt;Integer, BigDecimal&gt;, HashMap&lt;Integer, BigDecimal&gt;)</td>
+<td>7</td>
+<td>1</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>MainClass.findzeros(HashMap&lt;Integer, BigDecimal&gt;)</td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>MainClass.main(String[])</td>
+<td>17</td>
+<td>4</td>
+<td>6</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Mul.Mul(Operate, Operate)</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Mul.getResults()</td>
+<td>7</td>
+<td>1</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Number.Number(HashMap&lt;Integer, BigDecimal&gt;)</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Number.getResults()</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Operate.Operate(Operate, Operate)</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Operate.getLeft()</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Operate.getResults()</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Operate.getRight()</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Parser.Parser(String)</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Parser.del(String)</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Parser.findAddorSub(String)</td>
+<td>14</td>
+<td>4</td>
+<td>7</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Parser.findBracLeft(String)</td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Parser.findBracRight(String)</td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Parser.findMul(String)</td>
+<td>8</td>
+<td>4</td>
+<td>7</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Parser.findPow(String)</td>
+<td>9</td>
+<td>4</td>
+<td>4</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Parser.getResult()</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Parser.parse(String)</td>
+<td>23</td>
+<td>7</td>
+<td>9</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Sub.Sub(Operate, Operate)</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Sub.getResults()</td>
+<td>4</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>106</td>
+<td>44</td>
+<td>69</td>
+<td>82</td>
+</tr>
+<tr>
+<td>Average</td>
+<td>4.08</td>
+<td>1.69</td>
+<td>2.65</td>
+<td>3.15</td>
+</tr>
+</tbody></table>
+<ul>
+<li>类复杂度：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>OCavg</th>
+<th>OCmax</th>
+<th>WMC</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Number</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>Operate</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>Add</td>
+<td>2.0</td>
+<td>3.0</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>Sub</td>
+<td>2.0</td>
+<td>3.0</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>Exp</td>
+<td>2.67</td>
+<td>4.0</td>
+<td>8.0</td>
+</tr>
+<tr>
+<td>Mul</td>
+<td>2.5</td>
+<td>4.0</td>
+<td>5.0</td>
+</tr>
+<tr>
+<td>MainClass</td>
+<td>5.0</td>
+<td>7.0</td>
+<td>10.0</td>
+</tr>
+<tr>
+<td>Parser</td>
+<td>3.67</td>
+<td>8.0</td>
+<td>33.0</td>
+</tr>
+<tr>
+<td>Total</td>
+<td></td>
+<td></td>
+<td>70.0</td>
+</tr>
+<tr>
+<td>Average</td>
+<td>2.69</td>
+<td>3.875</td>
+<td>8.75</td>
+</tr>
+</tbody></table>
+<h4 id="本次作业的不足"><a href="#本次作业的不足" class="headerlink" title="本次作业的不足"></a>本次作业的不足</h4><ul>
+<li>本次作业未能达到最好的优化，于是第二次作业优化便翻车了。。。。</li>
+</ul>
+<h4 id="bug-分析及-Hack-策略"><a href="#bug-分析及-Hack-策略" class="headerlink" title="bug 分析及 Hack 策略"></a>bug 分析及 Hack 策略</h4><ul>
+<li>这次作业中，由于架构比较不算复杂，于是没有什么<code>bug</code>，但之后就有了。。。</li>
+<li>我<code>hack</code>了别人两次，通过看代码查出来一处错误</li>
+</ul>
+<h2 id="第二次作业"><a href="#第二次作业" class="headerlink" title="第二次作业"></a>第二次作业</h2><h4 id="作业要求简述-1"><a href="#作业要求简述-1" class="headerlink" title="作业要求简述"></a>作业要求简述</h4><ul>
+<li>这次作业比第一次作业高了一个级别，需要支持<code>sin</code>、<code>cos</code>、自定义函数、求和函数，其中三角函数中的只能是包含<code>x</code>的幂函数以及常数，其实一开始的要求不是这样的，可见助教们还是手下留情了。</li>
+</ul>
+<h4 id="作业思路-1"><a href="#作业思路-1" class="headerlink" title="作业思路"></a>作业思路</h4><ul>
+<li>这次作业我在写的时候考虑的一个最大的问题便是如何去存储每个运算符运算后的结果，我总共思考了两种方法<ul>
+<li>将<code>Hashmap</code>的键抽象为类，优点是每个运算符的<code>getResults()</code>函数只需做一些小改动即可，缺点是不适合之后三角函数的优化，比如<code>sin^2+cos^2=1</code>这种优化</li>
+<li>将<code>Hashmap</code>的键值抽象为类，优点是方便三角函数的优化，缺点是每个运算符的<code>getResults()</code>函数需要做比较大的改变</li>
+</ul>
+</li>
+<li>在博弈了两者优缺点之后，我选择了第一种并实现了<code>Item</code>这个类，当然，这也直接导致了后期想要进一步优化的时候特别麻烦</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Item</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> ArrayList&lt;String&gt; contentSin = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> ArrayList&lt;String&gt; contentCos = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Integer pow;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Item</span><span class="params">(Integer pow, ArrayList&lt;String&gt; contentCos, ArrayList&lt;String&gt; contentSin)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.pow = pow;</span><br><span class="line">        <span class="built_in">this</span>.contentCos = contentCos;</span><br><span class="line">        <span class="built_in">this</span>.contentSin = contentSin;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title function_">getContentCos</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> contentCos;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> ArrayList&lt;String&gt; <span class="title function_">getContentSin</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> contentSin;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> Integer <span class="title function_">getPow</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> pow;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="UML图"><a href="#UML图" class="headerlink" title="UML图"></a><code>UML</code>图</h4><p><img src="G:\CS_experiment\OO\OO_code\homework_4\homeword_2.png" alt="homeword_2"></p>
+<h4 id="复杂度分析-1"><a href="#复杂度分析-1" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><ul>
+<li>方法复杂度：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>CogC</th>
+<th>ev(G)</th>
+<th>iv(G)</th>
+<th>v(G)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Add.Add(Operate, Operate)</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Add.getResults()</td>
+<td>4</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Exp.Exp(Operate, Operate)</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Exp.getResults()</td>
+<td>5</td>
+<td>1</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Item.Item(Integer, ArrayList<String>, ArrayList<String>)</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Item.getContentCos()</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Item.getContentSin()</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Item.getPow()</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>MainClass.add(HashMap&lt;Item, BigDecimal&gt;, Item, BigDecimal)</td>
+<td>4</td>
+<td>3</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>MainClass.equalLists(ArrayList<String>, ArrayList<String>)</td>
+<td>4</td>
+<td>3</td>
+<td>3</td>
+<td>6</td>
+</tr>
+<tr>
+<td>MainClass.findzeros(HashMap&lt;Item, BigDecimal&gt;)</td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>MainClass.main(String[])</td>
+<td>8</td>
+<td>4</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>MainClass.merge(HashMap&lt;Item, BigDecimal&gt;)</td>
+<td>3</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>MainClass.outCoe(Item, BigDecimal, int, StringBuilder)</td>
+<td>15</td>
+<td>1</td>
+<td>14</td>
+<td>14</td>
+</tr>
+<tr>
+<td>MainClass.outTrig(Item, StringBuilder)</td>
+<td>15</td>
+<td>1</td>
+<td>12</td>
+<td>12</td>
+</tr>
+<tr>
+<td>MainClass.outVar(Item, StringBuilder, BigDecimal)</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>4</td>
+</tr>
+<tr>
+<td>MainClass.sum(ArrayList<String>)</td>
+<td>10</td>
+<td>1</td>
+<td>4</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Mul.Mul(Operate, Operate)</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Mul.getContent(ArrayList<String>, ArrayList<String>)</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Mul.getResults()</td>
+<td>7</td>
+<td>1</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td>Number.Number(HashMap&lt;Item, BigDecimal&gt;)</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Number.getResults()</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Operate.Operate(Operate, Operate)</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Operate.getLeft()</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Operate.getResults()</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Operate.getRight()</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Parser.Parser(String, ArrayList<String>)</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Parser.dealCustomFunc(String, ArrayList<Integer>)</td>
+<td>12</td>
+<td>3</td>
+<td>9</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Parser.dealSum(String, ArrayList<Integer>)</td>
+<td>1</td>
+<td>1</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Parser.dealTrigFunc(String, ArrayList<Integer>)</td>
+<td>16</td>
+<td>3</td>
+<td>17</td>
+<td>17</td>
+</tr>
+<tr>
+<td>Parser.del(String)</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Parser.findAddOrSub(String)</td>
+<td>13</td>
+<td>4</td>
+<td>6</td>
+<td>9</td>
+</tr>
+<tr>
+<td>Parser.findBracLeft(String)</td>
+<td>2</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Parser.findBracRight(String)</td>
+<td>2</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Parser.findCustomFunc(String)</td>
+<td>26</td>
+<td>4</td>
+<td>12</td>
+<td>14</td>
+</tr>
+<tr>
+<td>Parser.findMul(String)</td>
+<td>8</td>
+<td>4</td>
+<td>7</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Parser.findPow(String)</td>
+<td>9</td>
+<td>4</td>
+<td>4</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Parser.findSum(String)</td>
+<td>27</td>
+<td>4</td>
+<td>13</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Parser.findTrigFunc(String)</td>
+<td>28</td>
+<td>4</td>
+<td>15</td>
+<td>17</td>
+</tr>
+<tr>
+<td>Parser.getResult()</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Parser.parse(String)</td>
+<td>26</td>
+<td>10</td>
+<td>13</td>
+<td>13</td>
+</tr>
+<tr>
+<td>Parser.setFunc(ArrayList<String>)</td>
+<td>3</td>
+<td>1</td>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Sub.Sub(Operate, Operate)</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Sub.getResults()</td>
+<td>4</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>TrigFunc.TrigFunc(String, String)</td>
+<td>2</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>TrigFunc.getResults()</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<ul>
+<li>类复杂度：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>OCavg</th>
+<th>OCmax</th>
+<th>WMC</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Item</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>Number</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>Operate</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>Add</td>
+<td>2.0</td>
+<td>3.0</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>Sub</td>
+<td>2.0</td>
+<td>3.0</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>TrigFunc</td>
+<td>2.0</td>
+<td>3.0</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>Exp</td>
+<td>2.5</td>
+<td>4.0</td>
+<td>5.0</td>
+</tr>
+<tr>
+<td>Mul</td>
+<td>2.0</td>
+<td>4.0</td>
+<td>6.0</td>
+</tr>
+<tr>
+<td>MainClass</td>
+<td>4.78</td>
+<td>9.0</td>
+<td>43.0</td>
+</tr>
+<tr>
+<td>Parser</td>
+<td>5.68</td>
+<td>11.0</td>
+<td>91.0</td>
+</tr>
+<tr>
+<td>Total</td>
+<td></td>
+<td></td>
+<td>167.0</td>
+</tr>
+<tr>
+<td>Average</td>
+<td>3.63</td>
+<td>4.0</td>
+<td>16.7</td>
+</tr>
+</tbody></table>
+<h4 id="本次作业的不足-1"><a href="#本次作业的不足-1" class="headerlink" title="本次作业的不足"></a>本次作业的不足</h4><ul>
+<li>本次作业优化未能达到最优，尤其是关于三角函数的优化</li>
+</ul>
+<h4 id="bug-分析及-Hack-策略-1"><a href="#bug-分析及-Hack-策略-1" class="headerlink" title="bug 分析及 Hack 策略"></a>bug 分析及 Hack 策略</h4><ul>
+<li>本次作业强测中发现了一个<code>bug</code>，互测中被<code>Hack</code>了两次，究其原因，还是自己最后有些贪性能分了又没有好好去想怎么优化，将最终得到的字符串中的<code>1*</code>全都<code>replace</code>为空了，这直接导致了<code>11*x</code>输出<code>1x</code>，于是便出错了</li>
+<li>其实这次作业还有一个隐藏<code>bug</code>，那就是<code>sum</code>求和函数的<code>i</code>我当时使用的是<code>int</code>去存储，这个错误一直到第三次作业互测才被发现。。。</li>
+<li>本次互测未发现别人<code>bug</code></li>
+</ul>
+<h2 id="第三次作业"><a href="#第三次作业" class="headerlink" title="第三次作业"></a>第三次作业</h2><h4 id="作业要求简述-2"><a href="#作业要求简述-2" class="headerlink" title="作业要求简述"></a>作业要求简述</h4><ul>
+<li>本次作业主要是添加了括号嵌套、三角函数内容可包含表达式、自定义函数嵌套，形式更为复杂。</li>
+</ul>
+<h4 id="作业思路-2"><a href="#作业思路-2" class="headerlink" title="作业思路"></a>作业思路</h4><ul>
+<li>由于我采用的是<strong>递归下降</strong>的方法，所以不用改动太多，因此这次我的主要改动是体现在优化输出上了。</li>
+<li>层次化的输出：先输出符号，再输出系数，然后是变量，最后是指数。之后分别优化便可。</li>
+<li>其实三角函数的输出跟最终结果的输出有很大的重叠部分，所以说主要还是在于性能上了，比如有些可以不加括号的，而有些是必须要加括号的，我是特殊情况特殊判断的，代码如下</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">boolean</span> <span class="variable">cosEmpty</span> <span class="operator">=</span> st.getContentCos().isEmpty();</span><br><span class="line"><span class="type">boolean</span> <span class="variable">sinEmpty</span> <span class="operator">=</span> st.getContentSin().isEmpty();</span><br><span class="line"><span class="type">boolean</span> <span class="variable">powIsZero</span> <span class="operator">=</span> st.getPow() == <span class="number">0</span>;</span><br><span class="line"><span class="type">boolean</span> <span class="variable">coeIsOne</span> <span class="operator">=</span> result.get(st).equals(<span class="keyword">new</span> <span class="title class_">BigDecimal</span>(<span class="number">1</span>));</span><br><span class="line"><span class="type">boolean</span> <span class="variable">numberOnly</span> <span class="operator">=</span> (size == <span class="number">1</span> &amp;&amp; (cosEmpty &amp;&amp; sinEmpty &amp;&amp; powIsZero));</span><br><span class="line"><span class="type">boolean</span> <span class="variable">varOnly</span> <span class="operator">=</span> (size == <span class="number">1</span> &amp;&amp; cosEmpty &amp;&amp; sinEmpty &amp;&amp; coeIsOne);</span><br><span class="line"><span class="type">boolean</span> <span class="variable">cosOnly</span> <span class="operator">=</span> (size == <span class="number">1</span> &amp;&amp; sinEmpty</span><br><span class="line">                   &amp;&amp; powIsZero &amp;&amp; coeIsOne &amp;&amp; st.getContentCos().size() == <span class="number">1</span>);</span><br><span class="line"><span class="type">boolean</span> <span class="variable">sinOnly</span> <span class="operator">=</span> (size == <span class="number">1</span> &amp;&amp; cosEmpty</span><br><span class="line">                   &amp;&amp; powIsZero &amp;&amp; coeIsOne &amp;&amp; st.getContentSin().size() == <span class="number">1</span>);</span><br><span class="line"><span class="keyword">if</span> (numberOnly) &#123; outCoe(st, result.get(st), output); &#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (varOnly) &#123;</span><br><span class="line">    output.append(<span class="string">&quot;x&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span> (st.getPow() &gt; <span class="number">1</span>) &#123;</span><br><span class="line">        output.append(<span class="string">&quot;**&quot;</span>).append(st.getPow());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (sinOnly) &#123;</span><br><span class="line">    output.append(<span class="string">&quot;sin(&quot;</span>).append(st.getContentSin().get(<span class="number">0</span>)).append(<span class="string">&quot;)&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (cosOnly) &#123;</span><br><span class="line">    output.append(<span class="string">&quot;cos(&quot;</span>).append(st.getContentCos().get(<span class="number">0</span>)).append(<span class="string">&quot;)&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="UML图-1"><a href="#UML图-1" class="headerlink" title="UML图"></a><code>UML</code>图</h4><p><img src="G:\CS_experiment\OO\OO_code\homework_4\homework_3.png" alt="homework_3"></p>
+<h4 id="复杂度分析-2"><a href="#复杂度分析-2" class="headerlink" title="复杂度分析"></a>复杂度分析</h4><ul>
+<li>方法复杂度</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>CogC</th>
+<th>ev(G)</th>
+<th>iv(G)</th>
+<th>v(G</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Add.Add(Operate, Operate)</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Add.find(HashMap, Item, BigDecimal)</td>
+<td>3.0</td>
+<td>3.0</td>
+<td>3.0</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>Add.getResults()</td>
+<td>3.0</td>
+<td>1.0</td>
+<td>3.0</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>CustomFunc.CustomFunc(String, String, HashMap)</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>CustomFunc.execute(String, String, HashMap)</td>
+<td>15.0</td>
+<td>3.0</td>
+<td>12.0</td>
+<td>13.0</td>
+</tr>
+<tr>
+<td>CustomFunc.findComma(String)</td>
+<td>8.0</td>
+<td>4.0</td>
+<td>4.0</td>
+<td>6.0</td>
+</tr>
+<tr>
+<td>CustomFunc.getExpr()</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>CustomFunc.getResults()</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>CustomFunc.setResults(HashMap)</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Exp.Exp(Operate, Operate)</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Exp.getResults()</td>
+<td>5.0</td>
+<td>1.0</td>
+<td>4.0</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>Item.equalLists(ArrayList, ArrayList)</td>
+<td>4.0</td>
+<td>3.0</td>
+<td>3.0</td>
+<td>6.0</td>
+</tr>
+<tr>
+<td>Item.equals(Item)</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>3.0</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>Item.getContentCos()</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Item.getContentSin()</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Item.getPow()</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Item.Item(Integer, ArrayList, ArrayList)</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>MainClass.main(String[])</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>2.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>Mul.find(HashMap, Item, BigDecimal)</td>
+<td>3.0</td>
+<td>3.0</td>
+<td>3.0</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>Mul.getContent(ArrayList, ArrayList)</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Mul.getResults()</td>
+<td>6.0</td>
+<td>1.0</td>
+<td>4.0</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>Mul.Mul(Operate, Operate)</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Number.getResults()</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Number.Number(HashMap)</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Operate.getLeft()</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Operate.getResults()</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Operate.getRight()</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Operate.Operate(Operate, Operate)</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Parser.buildString(HashMap)</td>
+<td>7.0</td>
+<td>4.0</td>
+<td>3.0</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>Parser.dealCustomFunc(String, ArrayList)</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Parser.dealSum(String, ArrayList)</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>2.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>Parser.dealTrigFunc(String, ArrayList)</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>3.0</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>Parser.del(String)</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Parser.findAddOrSub(String)</td>
+<td>13.0</td>
+<td>4.0</td>
+<td>6.0</td>
+<td>9.0</td>
+</tr>
+<tr>
+<td>Parser.findBracLeft(String)</td>
+<td>2.0</td>
+<td>1.0</td>
+<td>2.0</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>Parser.findBracRight(String)</td>
+<td>2.0</td>
+<td>1.0</td>
+<td>3.0</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>Parser.findCustomFunc(String)</td>
+<td>4.0</td>
+<td>1.0</td>
+<td>6.0</td>
+<td>6.0</td>
+</tr>
+<tr>
+<td>Parser.findMul(String)</td>
+<td>8.0</td>
+<td>4.0</td>
+<td>7.0</td>
+<td>10.0</td>
+</tr>
+<tr>
+<td>Parser.findPow(String)</td>
+<td>9.0</td>
+<td>4.0</td>
+<td>4.0</td>
+<td>7.0</td>
+</tr>
+<tr>
+<td>Parser.findSum(String)</td>
+<td>4.0</td>
+<td>1.0</td>
+<td>6.0</td>
+<td>6.0</td>
+</tr>
+<tr>
+<td>Parser.findTrigFunc(String)</td>
+<td>6.0</td>
+<td>1.0</td>
+<td>9.0</td>
+<td>9.0</td>
+</tr>
+<tr>
+<td>Parser.findzeros(HashMap)</td>
+<td>3.0</td>
+<td>1.0</td>
+<td>2.0</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>Parser.outCoe(Item, BigDecimal, int, StringBuilder)</td>
+<td>2.0</td>
+<td>1.0</td>
+<td>3.0</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>Parser.outTrig(Item, StringBuilder)</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Parser.outVar(Item, StringBuilder)</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Parser.parse(String)</td>
+<td>26.0</td>
+<td>10.0</td>
+<td>13.0</td>
+<td>13.0</td>
+</tr>
+<tr>
+<td>Parser.Parser(String, ArrayList)</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Parser.setFunc(ArrayList)</td>
+<td>3.0</td>
+<td>1.0</td>
+<td>2.0</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>Parser.sort(HashMap)</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>2.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>Parser.sum(ArrayList)</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Parser.toString()</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Sub.find(HashMap, Item, BigDecimal)</td>
+<td>3.0</td>
+<td>3.0</td>
+<td>3.0</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>Sub.getResults()</td>
+<td>3.0</td>
+<td>1.0</td>
+<td>3.0</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>Sub.Sub(Operate, Operate)</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>TrigFunc.buildCoe(Item, BigDecimal, StringBuilder, Integer)</td>
+<td>2.0</td>
+<td>1.0</td>
+<td>3.0</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>TrigFunc.findzeros(HashMap)</td>
+<td>3.0</td>
+<td>1.0</td>
+<td>2.0</td>
+<td>3.0</td>
+</tr>
+<tr>
+<td>TrigFunc.generateTrig(Item, StringBuilder, HashMap, HashMap)</td>
+<td>15.0</td>
+<td>1.0</td>
+<td>12.0</td>
+<td>12.0</td>
+</tr>
+<tr>
+<td>TrigFunc.genVar(Item, StringBuilder)</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>TrigFunc.getResults()</td>
+<td>9.0</td>
+<td>3.0</td>
+<td>11.0</td>
+<td>13.0</td>
+</tr>
+<tr>
+<td>TrigFunc.getStringIntegerHashMap(ArrayList)</td>
+<td>10.0</td>
+<td>1.0</td>
+<td>4.0</td>
+<td>5.0</td>
+</tr>
+<tr>
+<td>TrigFunc.out()</td>
+<td>27.0</td>
+<td>9.0</td>
+<td>17.0</td>
+<td>26.0</td>
+</tr>
+<tr>
+<td>TrigFunc.outCoe(Item, BigDecimal, StringBuilder)</td>
+<td>13.0</td>
+<td>1.0</td>
+<td>12.0</td>
+<td>12.0</td>
+</tr>
+<tr>
+<td>TrigFunc.outTrig(Item, StringBuilder)</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>TrigFunc.outVar(Item, StringBuilder)</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>TrigFunc.sort(HashMap)</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>2.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>TrigFunc.TrigFunc(HashMap, boolean)</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Total</td>
+<td>228.0</td>
+<td>110.0</td>
+<td>213.0</td>
+<td>248.0</td>
+</tr>
+<tr>
+<td>Average</td>
+<td>3.454</td>
+<td>1.667</td>
+<td>3.2273</td>
+<td>3.758</td>
+</tr>
+</tbody></table>
+<ul>
+<li>类复杂度：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>OCavg</th>
+<th>OCmax</th>
+<th>WMC</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Number</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>Operate</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>4.0</td>
+</tr>
+<tr>
+<td>MainClass</td>
+<td>2.0</td>
+<td>2.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>Add</td>
+<td>2.33</td>
+<td>3.0</td>
+<td>7.0</td>
+</tr>
+<tr>
+<td>Item</td>
+<td>1.33</td>
+<td>3.0</td>
+<td>8.0</td>
+</tr>
+<tr>
+<td>Sub</td>
+<td>2.33</td>
+<td>3.0</td>
+<td>7.0</td>
+</tr>
+<tr>
+<td>Exp</td>
+<td>2.5</td>
+<td>4.0</td>
+<td>5.0</td>
+</tr>
+<tr>
+<td>Mul</td>
+<td>2.25</td>
+<td>4.0</td>
+<td>9.0</td>
+</tr>
+<tr>
+<td>Parser</td>
+<td>2.78</td>
+<td>11.0</td>
+<td>64.0</td>
+</tr>
+<tr>
+<td>TrigFunc</td>
+<td>4.25</td>
+<td>11.0</td>
+<td>51.0</td>
+</tr>
+<tr>
+<td>CustomFunc</td>
+<td>3.67</td>
+<td>13.0</td>
+<td>22.0</td>
+</tr>
+<tr>
+<td>Total</td>
+<td></td>
+<td></td>
+<td>181.0</td>
+</tr>
+<tr>
+<td>Average</td>
+<td>2.74</td>
+<td>5.09</td>
+<td>16.46</td>
+</tr>
+</tbody></table>
+<h4 id="本次作业的不足-2"><a href="#本次作业的不足-2" class="headerlink" title="本次作业的不足"></a>本次作业的不足</h4><ul>
+<li>这次作业未能优化<code>sin(x)**2+cos(x)**2 = 1</code>的问题，以及<code>sin(x)+sin((-x)) = 0</code>的问题导致性能分有点低，主要应该还是架构的问题吧。</li>
+</ul>
+<h4 id="bug-分析及-Hack-策略-2"><a href="#bug-分析及-Hack-策略-2" class="headerlink" title="bug 分析及 Hack 策略"></a>bug 分析及 Hack 策略</h4><ul>
+<li><code>sum</code>未考虑<code>i</code>为大数的时候的情况，导致被<code>Hack</code>了四次，共<code>Hack</code>了他人两次。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><code>pre</code>做完之后对与<code>Java</code>有了一个认识，但当时还没有好的架构这个概念。因此第一单元的架构感觉设计得不算很好，导致性能分有些拉跨。尤其是在写第一次作业的时候，花了比较长的时间，其原因还是心里没有架构这个概念，另外就是对<code>Java</code>的一些数据结构不算特别了解。还有就是没能实现一个评测机的编写。希望在之后的几次单元里好好设计自己的架构，不要着急写代码，并完成一个评测机。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/01/19/%E3%80%8A%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E3%80%8B%E7%AC%AC%E4%B8%89%E7%89%88%E7%AC%AC%E4%B8%80%E7%AB%A0%E6%80%BB%E7%BB%93/" rel="next" title="第一章总结">
+                  第一章总结 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">南风知我意</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+
+</html>
